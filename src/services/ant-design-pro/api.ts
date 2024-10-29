@@ -42,7 +42,6 @@ export async function register(body: API.LoginParams, options?: { [key: string]:
   });
 }
 
-
 /** 此处后端没有提供注释 GET /api/notices */
 export async function getNotices(options?: { [key: string]: any }) {
   return request<API.NoticeIconList>('/api/notices', {
@@ -78,7 +77,7 @@ export async function updateRule(options?: { [key: string]: any }) {
     data: {
       method: 'update',
       ...(options || {}),
-    }
+    },
   });
 }
 
@@ -89,7 +88,7 @@ export async function addRule(options?: { [key: string]: any }) {
     data: {
       method: 'post',
       ...(options || {}),
-    }
+    },
   });
 }
 
@@ -100,6 +99,25 @@ export async function removeRule(options?: { [key: string]: any }) {
     data: {
       method: 'delete',
       ...(options || {}),
-    }
+    },
+  });
+}
+
+// ------------------------------------------------------------
+/** 获取用户信息 */
+// /user/search
+export async function searchUsers(options?: { [key: string]: any }) {
+  return request<API.CurrentUser[]>('/user/search', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 用户注销 */
+// /user/logout
+export async function userLogout(options?: { [key: string]: any }) {
+  return request<API.CurrentUser[]>('/user/logout', {
+    method: 'POST',
+    ...(options || {}),
   });
 }

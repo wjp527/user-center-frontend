@@ -37,16 +37,18 @@ export default [
     path: '/admin',
     name: 'admin',
     icon: 'crown',
+    // 仅管理员可访问
     access: 'canAdmin',
+    // component: './Admin',
     routes: [
       {
         path: '/admin',
         redirect: '/admin/sub-page',
       },
       {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        component: './Admin',
+        name: 'UserManage',
+        path: '/admin/user-manage',
+        component: '@/pages/Admin/UserManage/index.tsx',
       },
     ],
   },
