@@ -11,6 +11,7 @@ export default {
   'pages.login.userAccount.required': '用户名是必填项！',
   'pages.login.userPassword.placeholder': '请输入密码',
   'pages.login.userPassword.required': '密码是必填项！',
+  'pages.login.planetCode.required': '星球编号是必填项！',
   // 再次输入密码
   'pages.login.checkPassword.required': '确认密码是必填项！',
   'pages.login.passwordPK.required': '两次密码必须一致',

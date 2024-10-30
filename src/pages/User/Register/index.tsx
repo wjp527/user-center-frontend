@@ -2,12 +2,12 @@ import { Footer } from '@/components';
 import { register } from '@/services/ant-design-pro/api';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
-import { FormattedMessage, history, SelectLang, useIntl, useModel, Helmet } from '@umijs/max';
+import { FormattedMessage, Helmet, history, SelectLang, useIntl, useModel } from '@umijs/max';
 import { message, Tabs } from 'antd';
-import Settings from '../../../../config/defaultSettings';
+import { createStyles } from 'antd-style';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
-import { createStyles } from 'antd-style';
+import Settings from '../../../../config/defaultSettings';
 // 系统logo
 import { PLANET_LINK, SYSTEM_LOGO } from '@/constants';
 import { Button } from 'antd';
@@ -81,15 +81,15 @@ const Register: React.FC = () => {
     try {
       const { userPassword, checkPassword } = values;
       if (userPassword !== checkPassword) {
-        const defaultLoginFailureMessage = intl.formatMessage({
+        const defaultRegisterFailureMessage = intl.formatMessage({
           id: 'pages.login.passwordPK.required',
         });
-        message.error(defaultLoginFailureMessage);
+        message.error(defaultRegisterFailureMessage);
         return;
       }
       // 登录
-      const id = await register({ ...values, type });
-      if (id > 0) {
+      const res: any = await register({ ...values, type });
+      if (res.code === 0 && res.data > 0) {
         // 弹窗
         const defaultLoginSuccessMessage = intl.formatMessage({
           id: 'pages.register.success',
@@ -101,15 +101,16 @@ const Register: React.FC = () => {
         history.push(urlParams.get('redirect') || '/');
         return;
       } else {
-        throw new Error(`register error id = ${id}`);
+        throw new Error(res.description);
       }
-    } catch (error) {
-      const defaultLoginFailureMessage = intl.formatMessage({
-        id: 'pages.register.failure',
-        // defaultMessage: '登录失败，请重试！',
-      });
-      console.log(error);
-      message.error(defaultLoginFailureMessage);
+    } catch (error: any) {
+      // const defaultRegisterFailureMessage = intl.formatMessage({
+      //   id: 'pages.register.failure',
+      //   // defaultMessage: '登录失败，请重试！',
+      // });
+      const defaultRegisterFailureMessage = '注册失败，请重试';
+      // 就是如果左测的值不为null或undefined，那就返回左侧的，反之，返回右侧的值
+      message.error(error.message ?? defaultRegisterFailureMessage);
     }
   };
   // const { status, type: loginType } = userLoginState;
@@ -233,7 +234,22 @@ const Register: React.FC = () => {
                   },
                 ]}
               />
-
+              {/* 星球编号 */}
+              <ProFormText
+                name="planetCode"
+                fieldProps={{
+                  size: 'large',
+                  prefix: <LockOutlined />,
+                }}
+                placeholder="请输入星球编号"
+                rules={[
+                  {
+                    required: true,
+                    message: <FormattedMessage id="pages.login.planetCode.required" />,
+                  },
+                ]}
+              />
+              {/* 登录按钮 */}
               <div
                 style={{
                   marginBottom: 10,

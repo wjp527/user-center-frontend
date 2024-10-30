@@ -2,6 +2,15 @@
 /* eslint-disable */
 
 declare namespace API {
+  // 通用响应类型
+  type BaseResponse<T> = {
+    code: number;
+    data: T;
+    message: string;
+    description: string;
+  };
+
+  // 获取用户信息
   type CurrentUser = {
     id?: number;
     username?: string;
@@ -12,19 +21,17 @@ declare namespace API {
     phone?: string;
     email?: string;
     userStatus?: number;
-    createTime?: null;
+    createTime?: Date;
     updateTime?: null;
     isDelete?: null;
     userRole?: number;
-
+    planetCode?: string;
   };
 
   type LoginResult = {
     status?: string;
     type?: string;
     currentAuthority?: string;
-
-
   };
 
   type RegisterResult = number;
@@ -69,13 +76,16 @@ declare namespace API {
   };
 
   type RegisterParams = {
+    // 用户账号
     userAccount?: string;
+    // 用户密码
     userPassword?: string;
+    // 确认密码
     checkPassword?: string;
-    autoLogin?: boolean;
+    // 星球编号
+    planetCode?: string;
     type?: string;
   };
-
 
   type ErrorResponse = {
     /** 业务约定的错误码 */

@@ -42,6 +42,15 @@ const columns: ProColumns<API.CurrentUser>[] = [
   },
   {
     // 展示名
+    title: '星球编号',
+    // 字段名
+    dataIndex: 'planetCode',
+    // 是否允许缩略
+    ellipsis: true,
+    tooltip: '标题过长会自动收缩',
+  },
+  {
+    // 展示名
     title: '用户头像',
     // 字段名
     dataIndex: 'avatarUrl',
@@ -152,9 +161,9 @@ const UserManage = () => {
       actionRef={actionRef}
       cardBordered
       request={async () => {
-        const userList = await searchUsers();
+        const res = await searchUsers();
         return {
-          data: userList,
+          data: res.data,
         };
       }}
       editable={{
