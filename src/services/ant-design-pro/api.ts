@@ -37,9 +37,13 @@ export async function register(body: API.RegisterParams, options?: { [key: strin
 
 /** 获取用户信息 */
 // /user/search
-export async function searchUsers(options?: { [key: string]: any }) {
+export async function searchUsers(body: API.CurrentUser, options?: { [key: string]: any }) {
   return request<API.BaseResponse<API.CurrentUser[]>>('/user/search', {
-    method: 'GET',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
     ...(options || {}),
   });
 }
@@ -50,6 +54,29 @@ export async function userLogout(options?: { [key: string]: any }) {
   return request<API.BaseResponse<number>>('/user/logout', {
     method: 'POST',
     ...(options || {}),
+  });
+}
+
+/** 修改用户信息 */
+// /user/update
+export async function userListUpdate(
+  body: API.userListUpdateParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponse<API.userListUpdateResult>>('/user/userList/update', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 删除用户 */
+export async function userListDelete(options: number) {
+  return request<API.BaseResponse<number>>(`/user/userList/delete/${options}`, {
+    method: 'POST',
   });
 }
 

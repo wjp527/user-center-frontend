@@ -6,6 +6,8 @@ import { SettingDrawer } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
+
+// 是否开发环境
 const isDev = process.env.NODE_ENV === 'development';
 
 import { RequestConfig } from '@@/plugin-request/request';
@@ -35,6 +37,7 @@ export async function getInitialState(): Promise<{
       const res = await queryCurrentUser({
         skipErrorHandler: true,
       });
+      console.log(res.data, 'res.data');
       return res.data;
     } catch (error) {
       history.push(loginPath);
@@ -76,7 +79,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     },
     // 设置水印
     waterMarkProps: {
-      content: initialState?.currentUser?.username,
+      content: initialState?.currentUser?.username || '',
     },
     footerRender: () => <Footer />,
     onPageChange: () => {

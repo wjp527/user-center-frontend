@@ -12,7 +12,8 @@ import { extend } from 'umi-request';
  */
 const request = extend({
   credentials: 'include', // 默认请求是否带上cookie
-  prefix: '/api',
+  // 判断什么环境用什么请求路径
+  prefix: process.env.NODE_ENV === 'production' ? 'http://user-backend.code-nav.cn' : '/api',
   // requestType: 'form',
 });
 

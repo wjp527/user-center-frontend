@@ -26,6 +26,9 @@ declare namespace API {
     isDelete?: null;
     userRole?: number;
     planetCode?: string;
+    current?: number;
+    pageSize?: number;
+    created_at?: string;
   };
 
   type LoginResult = {
@@ -34,7 +37,39 @@ declare namespace API {
     currentAuthority?: string;
   };
 
+  type RegisterParams = {
+    // 用户账号
+    userAccount?: string;
+    // 用户密码
+    userPassword?: string;
+    // 确认密码
+    checkPassword?: string;
+    // 星球编号
+    planetCode?: string;
+    type?: string;
+  };
   type RegisterResult = number;
+
+  // 更新用户需要用的参数
+  type userListUpdateResult = number;
+  type userListUpdateParams = {
+    id?: number;
+    username?: string;
+    userAccount?: string;
+    avatarUrl?: string;
+    gender?: number;
+    userPassword?: null;
+    phone?: string;
+    email?: string;
+    userStatus?: number;
+    createTime?: Date;
+    updateTime?: null;
+    isDelete?: null;
+    userRole?: number;
+    planetCode?: string;
+  };
+
+  //  ===============================================
 
   type PageParams = {
     current?: number;
@@ -72,18 +107,6 @@ declare namespace API {
     userAccount?: string;
     userPassword?: string;
     autoLogin?: boolean;
-    type?: string;
-  };
-
-  type RegisterParams = {
-    // 用户账号
-    userAccount?: string;
-    // 用户密码
-    userPassword?: string;
-    // 确认密码
-    checkPassword?: string;
-    // 星球编号
-    planetCode?: string;
     type?: string;
   };
 
